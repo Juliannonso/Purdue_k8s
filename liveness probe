@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: pod
+metadata:
+  name: liveness-demo
+  labels:
+    app: myapp
+    type: dev
+spec: 
+  containers:
+  - name: test-liveness-probe
+    image: nginx
+    ports:
+    - containerPort: 80
+    livenessProbe:
+       exec:
+         command:
+            - sh
+            - -c
+            - service nginx status | grep running
+       initialDelaySeconds: 10
+       periodSeconds: 5
